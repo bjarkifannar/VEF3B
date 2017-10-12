@@ -1,49 +1,85 @@
-var camera, scene, renderer;
-var geometry, material, mesh;
-var scaleUp = true, scaleAmount = 0.02;
+/*
+	https://aerotwist.com/tutorials/getting-started-with-three-js/
+*/
 
-init();
-animate();
+/* Stærð senunnar */
+const WIDTH = 800;
+const HEIGHT = 600;
 
-function init() {
-	camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
-	camera.position.z = 1;
+/* Attributes fyfir cameru */
+const VIEW_ANGLE = 45;
+const ASPECT = WIDTH / HEIGHT;
+const NEAR = 0.1;
+const FAR = 10000;
 
-	scene = new THREE.Scene();
+/* Ná í DOM element til að nota sem renderer */
+const container = document.querySelector('#container');
 
-	geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
-	material = new THREE.MeshNormalMaterial();
+/* Búa til WebGL renderer, cameru og senu (scene) */
+const renderer = new THREE.WebGLRenderer();
+const camera =
+	new THREE.PerspectiveCamera(
+		VIEW_ANGLE,
+		ASPECT,
+		NEAR,
+		FAR
+	);
 
-	mesh = new THREE.Mesh(geometry, material);
-	scene.add(mesh);
+const scene = new THREE.Scene();
 
-	renderer = new THREE.WebGLRenderer({antialias: true});
-	renderer.setSize(window.innerWidth, window.innerHeight);
-	document.body.appendChild(renderer.domElement);
-}
+/* Bæta cameru inn í senuna */
+scene.add(camera);
 
-function animate() {
-	requestAnimationFrame(animate);
+/* Starta renderer */
+renderer.setSize(WIDTH, HEIGHT);
 
-	// mesh.rotation.x += 0.01;
-	// mesh.rotation.y += Math.random() * 0.1 + 0.01;
-	mesh.rotation.y += 0.01;
+/* Tengja renderer við container */
+container.appendChild(renderer.domElement);
 
-	if (mesh.scale.x > 2) {
-		scaleUp = false;
-	} else if (mesh.scale.x < 1) {
-		scaleUp = true;
-	}
+/* Setja upp breytur fyrir kúlu */
+const RADIUS = 50;
+const SEGMENTS = 16;
+const RINGS = 16;
 
-	if (scaleUp) {
-		mesh.scale.x += scaleAmount;
-		mesh.scale.y += scaleAmount;
-		mesh.scale.z += scaleAmount;
-	} else {
-		mesh.scale.x -= scaleAmount;
-		mesh.scale.y -= scaleAmount;
-		mesh.scale.z -= scaleAmount;
-	}
+/* Búa til material fyrir kúluna */
+const sphereMaterial =
+	new THREE.MeshLambertMaterial(
+	{
+		color: 0xCC00FF
+	});
 
+/* Búa til mesh fyrir kúlu */
+const sphere = new THREE.Mesh(
+		new THREE.SphereGeometry(
+				RADIUS,
+				SEGMENTS,
+				RINGS),
+		sphereMaterial);
+
+/* Færa kúluna þannig að hún sjáist */
+sphere.position.z = -300;
+
+/* Bæta kúlunni við í senuna */
+scene.add(sphere);
+
+/* Búa til ljós */
+const pointLight =
+	new THREE.PointLight(0xFFFFFF);
+
+/* Setja position á ljósið */
+pointLight.position.x = 10;
+pointLight.position.y = 50;
+pointLight.position.z = 130;
+
+/* Bæta ljósinu við senuna */
+scene.add(pointLight);
+
+/* Rendera senuna */
+function update() {
 	renderer.render(scene, camera);
+
+	requestAnimationFrame(update);
 }
+
+/* Setja render fallið af stað */
+requestAnimationFrame(update);
