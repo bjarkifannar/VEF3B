@@ -1,0 +1,73 @@
+Útskýrðu stuttlega eftirfarandi hugtök og hvað þau gera:
+	1. WebGL
+		WebGL er JavaScript API til að forrita 3D grafík í netvöfrum sem styðja það (WebGL).
+
+	2. GPU
+		GPU (Graphics Processing Unit/Skjákort) er notað til að reikna og sýna grafík á skjá.
+
+	3. rasterizing
+		Rasterizing er það process að breyta 3D hlutum í 2D mynd sem er sýnd á skjánum.
+
+	4. GLSL
+		GLSL (OpenGL Shading Language) er forritun sem er svipuð C/C++ og er notuð til að skrifa
+		shaders fyrir OpenGL/WebGL fyrir t.d. ljós og skugga.
+
+	5. Vertex
+		Vertex er punktur þar sem tvær línur mætast í 3D módeli.
+
+	6. Primative
+		Primitives eru grunnform t.d. kubbar, kúlur, píramídar og fleira.
+
+	7. Fragment
+		Fragment eru gögn sem þarf til að búa til hvern pixel.
+
+	8. Pixel
+		Pixell er partur af mynd sem er samsetning af rauðum, grænum og bláum til að búa til ákveðinn lit.
+
+	9. Clip space
+		Clip space er sá hluti af grafíkinni sem er sýndur. Ef hlutur er fyrir utan þetta clip space er sá hlutur ekki sýnilegur.
+
+	10. View frustum
+		View frustum er sá partur sem er hægt að sjá.
+
+	11. Z-buffering
+		Z-buffering er notað til að ákveða hvað er fyrir framan eða aftan annan hlut
+		t.d. ef það er veggur og eitthvað bakvið hann á ekki að sjást hvað það er.
+
+	12. Right-hand coordinate system (RHS)
+		Í RHS er punkturinn (0, 0, 0) niðri í vinstra horni rendering gluggans. X+ fer til hægri, Y+ fer upp og Z- fer áfram.
+
+
+Afhverju eru 3D objectar búnir til útfrá samsettum þríhyrningum í 3D grafík?
+	Þríhyrningar geta búið til hvaða hlut sem er og eru aðveldir í útreikningum.
+
+
+Útskýrðu ítarlega og tæknilega (en án kóða) með eigin orðum ásmt skýringamyndum hvernig 
+rendering pipeline virkar í WebGL.
+	1. Þegar það á að rendera objecta í WebGL er vertex shaderinn keyrður fyrir hvern vertex. Einnig eru hlutir eins og litir og annað reiknað.
+
+	2. Þríhyrningar eru settir saman til að mynda form.
+
+	3. Snúningur þríhyrninganna er ákveðinn og þeir fjarlægðir ef bakhlið þeirra snýr að viewinu. Ef þríhyrningurinn fer út fyrir viewið er hann tekinn í burtu.
+
+	4. Fragment shader er keyrður. Fragment shaderinn getur fengið upplýsingar frá vertex shadernum og formum sem eru svo notaðar til að reikna liti fyrir hvern pixel.
+
+	5. Upplýsingar um hlutina á skjánum eru settar í frame buffer.
+
+	Skýringamynd: "WebGL Rendering Pipeline.jpg"
+
+
+Transform (translation, rotation og scale). Komdu með sýnidæmi með vector/vigri) í cartesian
+hnitakerfi (x, y, z) fyrir:
+	a) translation
+	
+	b) rotation
+	
+	c) scale
+
+Fylki (e. matrix). Sýndu með sýnidæmi hvernig 4x4 fylki vigri/vector er reiknaður með:
+	a) translation matrix
+
+	b) rotation matrix
+
+	c) scale matrix
